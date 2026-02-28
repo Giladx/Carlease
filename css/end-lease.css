@@ -1,0 +1,645 @@
+/* End Lease Page Styles */
+
+/* Hero Section */
+.end-lease-hero {
+    background: linear-gradient(135deg, #0a2540 0%, #1a3a5c 100%);
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.end-lease-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(0,212,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+    opacity: 0.5;
+}
+
+.hero-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-text {
+    color: white;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.hero-badge i {
+    color: #00d4ff;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.hero-benefits {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1rem;
+}
+
+.benefit-item i {
+    color: #00d4ff;
+    font-size: 1.2rem;
+}
+
+.trust-indicators {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.trust-item {
+    text-align: center;
+}
+
+.trust-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #00d4ff;
+    margin-bottom: 5px;
+}
+
+.trust-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Form Card */
+.hero-form-container {
+    position: sticky;
+    top: 100px;
+}
+
+.form-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header i {
+    font-size: 3rem;
+    color: #00d4ff;
+    margin-bottom: 15px;
+}
+
+.form-header h2 {
+    font-size: 1.8rem;
+    color: #0a2540;
+    margin-bottom: 10px;
+}
+
+.form-header p {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.form-section h3 {
+    font-size: 1.2rem;
+    color: #0a2540;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-section h3 i {
+    color: #00d4ff;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.required {
+    color: #ef4444;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.btn-submit {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form-disclaimer {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.form-disclaimer i {
+    color: #10b981;
+}
+
+/* How It Works Section */
+.how-it-works-lease {
+    padding: 80px 0;
+    background: #f9fafb;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #0a2540;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #6b7280;
+}
+
+.steps-timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    position: relative;
+}
+
+.steps-timeline::before {
+    content: '';
+    position: absolute;
+    top: 60px;
+    left: 12.5%;
+    right: 12.5%;
+    height: 2px;
+    background: linear-gradient(to right, #00d4ff, #0a2540);
+    z-index: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    opacity: 0;
+}
+
+.steps-timeline.animate::before {
+    animation: lineGrow 2s ease-out forwards;
+}
+
+@keyframes lineGrow {
+    from {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+.step-item {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.step-number {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #00d4ff, #0a2540);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+    z-index: 2;
+    border: 3px solid white;
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+}
+
+.steps-timeline.animate .step-item:nth-child(1) .step-number {
+    animation: numberFadeIn 0.6s ease-out forwards;
+    animation-delay: 0.3s;
+}
+
+.steps-timeline.animate .step-item:nth-child(2) .step-number {
+    animation: numberFadeIn 0.6s ease-out forwards;
+    animation-delay: 0.8s;
+}
+
+.steps-timeline.animate .step-item:nth-child(3) .step-number {
+    animation: numberFadeIn 0.6s ease-out forwards;
+    animation-delay: 1.3s;
+}
+
+.steps-timeline.animate .step-item:nth-child(4) .step-number {
+    animation: numberFadeIn 0.6s ease-out forwards;
+    animation-delay: 1.8s;
+}
+
+@keyframes numberFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+.step-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 3px solid #e5e7eb;
+}
+
+.step-icon i {
+    font-size: 2.5rem;
+    color: #00d4ff;
+}
+
+.step-item h3 {
+    font-size: 1.3rem;
+    color: #0a2540;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.step-item p {
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+/* Benefits Section */
+.lease-end-benefits {
+    padding: 80px 0;
+    background: white;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.benefit-card {
+    background: #f9fafb;
+    padding: 35px;
+    border-radius: 16px;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+    border-color: #00d4ff;
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.15);
+    transform: translateY(-5px);
+}
+
+.benefit-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #00d4ff, #0a2540);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.benefit-icon i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.benefit-card h3 {
+    font-size: 1.3rem;
+    color: #0a2540;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.benefit-card p {
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: 80px 0;
+    background: #f9fafb;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.faq-item {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: #00d4ff;
+    box-shadow: 0 5px 20px rgba(0, 212, 255, 0.1);
+}
+
+.faq-question {
+    display: flex;
+    align-items: start;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.faq-question i {
+    font-size: 1.5rem;
+    color: #00d4ff;
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+.faq-question h3 {
+    font-size: 1.2rem;
+    color: #0a2540;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.faq-answer p {
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+/* CTA Section */
+.lease-end-cta {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #0a2540 0%, #1a3a5c 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.lease-end-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(0,212,255,0.2)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23dots)"/></svg>');
+}
+
+.cta-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+.cta-content h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.cta-content > p {
+    font-size: 1.3rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-note {
+    margin-top: 30px;
+    font-size: 1rem;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .hero-text h1 {
+        font-size: 3rem;
+    }
+    
+    .steps-timeline {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .steps-timeline::before {
+        display: none;
+    }
+}
+
+@media (max-width: 968px) {
+    .hero-content-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .hero-form-container {
+        position: static;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .end-lease-hero {
+        padding: 100px 0 60px;
+    }
+    
+    .hero-text h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .trust-indicators {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .trust-number {
+        font-size: 1.8rem;
+    }
+    
+    .trust-label {
+        font-size: 0.8rem;
+    }
+    
+    .form-card {
+        padding: 25px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .steps-timeline {
+        grid-template-columns: 1fr;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .benefit-item {
+        font-size: 0.95rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+}

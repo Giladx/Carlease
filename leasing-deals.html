@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Inventory - United Auto Lease</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/leasing-deals-new.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://www.genspark.ai/api/files/s/WMgJLDUV" alt="United Auto Lease" class="logo-image">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="leasing-deals.html" class="active">Browse Inventory</a></li>
+                <li class="has-dropdown">
+                    <a href="#" onclick="return false">
+                        Credit Application
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="personal-application.html"><i class="fas fa-user"></i> Personal Application</a></li>
+                        <li><a href="business-application.html"><i class="fas fa-building"></i> Business Application</a></li>
+                        <li><a href="joint-application.html"><i class="fas fa-users"></i> Joint Application</a></li>
+                    </ul>
+                </li>
+                <li><a href="end-lease.html">
+                    <i class="fas fa-handshake"></i> End My Current Lease
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <!-- Background Video -->
+        <div class="video-background">
+            <video id="bgVideo" autoplay muted playsinline>
+                <source src="https://www.genspark.ai/api/files/s/xRaxhcib" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="container">
+            <h1><i class="fas fa-car-side"></i> Browse Inventory</h1>
+            <p>Browse our extensive inventory by category - Select a category to jump to that section</p>
+            
+            <!-- Price Filter -->
+            <div class="price-filter-container">
+                <div class="price-filter-header">
+                    <i class="fas fa-filter"></i>
+                    <span>Filter by Monthly Price</span>
+                </div>
+                <div class="price-filter-content">
+                    <div class="price-range-display">
+                        <span class="price-min">$0</span>
+                        <span class="price-separator">—</span>
+                        <span class="price-max">$2,000+</span>
+                    </div>
+                    <div class="price-slider-wrapper">
+                        <input type="range" id="minPriceSlider" min="0" max="2000" value="0" step="50" class="price-slider">
+                        <input type="range" id="maxPriceSlider" min="0" max="2000" value="2000" step="50" class="price-slider">
+                    </div>
+                    <div class="price-filter-actions">
+                        <button id="applyPriceFilter" class="btn-apply-filter">
+                            <i class="fas fa-check"></i> Apply Filter
+                        </button>
+                        <button id="clearPriceFilter" class="btn-clear-filter">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                    </div>
+                    <div class="filter-result-count">
+                        <span id="filterResultText">Showing all 229 vehicles</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pricing Disclaimer -->
+            <div class="pricing-disclaimer">
+                <i class="fas fa-info-circle"></i>
+                <p><strong>Please Note:</strong> Lease prices posted are approximate and are subject to change. The final monthly price depends on factors such as trim level, credit score, and the dealer's monthly lease programs. Contact us for an accurate quote tailored to your specific situation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Navigation Buttons -->
+    <section class="category-nav-section">
+        <div class="container">
+            <div class="category-buttons">
+                <button class="category-nav-btn" data-category="Sedan">
+                    <i class="fas fa-car"></i> Sedan
+                </button>
+                <button class="category-nav-btn" data-category="SUV">
+                    <i class="fas fa-truck"></i> SUV
+                </button>
+                <button class="category-nav-btn" data-category="Coupe">
+                    <i class="fas fa-car-side"></i> Coupe
+                </button>
+                <button class="category-nav-btn" data-category="Hatchback">
+                    <i class="fas fa-car"></i> Hatchback
+                </button>
+                <button class="category-nav-btn" data-category="Convertible">
+                    <i class="fas fa-umbrella-beach"></i> Convertible
+                </button>
+                <button class="category-nav-btn" data-category="Wagon">
+                    <i class="fas fa-car-side"></i> Wagon
+                </button>
+                <button class="category-nav-btn" data-category="Sports Car">
+                    <i class="fas fa-tachometer-alt"></i> Sports Car
+                </button>
+                <button class="category-nav-btn" data-category="Luxury">
+                    <i class="fas fa-gem"></i> Luxury
+                </button>
+                <button class="category-nav-btn" data-category="Truck">
+                    <i class="fas fa-truck-pickup"></i> Truck
+                </button>
+                <button class="category-nav-btn" data-category="Van">
+                    <i class="fas fa-shuttle-van"></i> Van
+                </button>
+                <button class="category-nav-btn" data-category="Electric">
+                    <i class="fas fa-bolt"></i> Electric
+                </button>
+                <button class="category-nav-btn" data-category="Hybrid">
+                    <i class="fas fa-leaf"></i> Hybrid
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Vehicles Container (Dynamically Loaded) -->
+    <div class="vehicles-main-container">
+        <div class="container">
+            <div id="vehicles-container">
+                <div class="loading-message">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading vehicles...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeContactForm()">&times;</span>
+            <h2><i class="fas fa-envelope"></i> Contact Us About This Vehicle</h2>
+            <div class="selected-vehicle-display">
+                <p><strong>Vehicle:</strong> <span id="selectedVehicleName"></span></p>
+            </div>
+            <form id="vehicleContactForm">
+                <input type="hidden" id="selectedVehicle" name="selectedVehicle">
+                
+                <div class="form-group">
+                    <label for="contactName"><i class="fas fa-user"></i> Name *</label>
+                    <input type="text" id="contactName" name="contactName" required placeholder="Your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactEmail"><i class="fas fa-envelope"></i> Email *</label>
+                    <input type="email" id="contactEmail" name="contactEmail" required placeholder="your@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactPhone"><i class="fas fa-phone"></i> Phone *</label>
+                    <input type="tel" id="contactPhone" name="contactPhone" required placeholder="(305) 123-4567">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactMessage"><i class="fas fa-comment"></i> Message (Optional)</label>
+                    <textarea id="contactMessage" name="contactMessage" rows="4" placeholder="Tell us about your needs or any questions..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Send Inquiry
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Back to Filter Button -->
+    <button id="backToFilterBtn" class="back-to-filter-btn" style="display: none;">
+        <i class="fas fa-filter"></i>
+        <span>Back to Filter</span>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>United Auto Lease</h3>
+                    <p>Your trusted partner for hassle-free auto leasing since 2008. Experience the difference with our premium service and competitive rates.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/unitedautolease/" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61565802159612" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="leasing-deals.html">Browse Inventory</a></li>
+                        <li><a href="personal-application.html">Credit Application</a></li>
+                        <li><a href="end-lease.html">End My Lease</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>1835 East Hallandale Beach Blvd<br>Hallandale Beach, Florida 33009</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>305-724-5534</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>sales@unitedautolease.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 United Auto Lease. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/leasing-deals-data.js"></script>
+    <script src="js/leasing-deals-renderer.js"></script>
+</body>
+</html>

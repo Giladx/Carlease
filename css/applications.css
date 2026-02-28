@@ -1,0 +1,510 @@
+/* ============================================
+   CREDIT APPLICATION STYLES
+   ============================================ */
+
+/* Application Hero */
+.application-hero {
+    background: linear-gradient(135deg, #0a2540 0%, #00d4ff 100%);
+    color: white;
+    padding: 3rem 0 2rem;
+    text-align: center;
+}
+
+.application-header {
+    margin-bottom: 2rem;
+}
+
+.application-header i {
+    font-size: 4rem;
+    color: #00d4ff;
+    margin-bottom: 1rem;
+}
+
+.application-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.application-header p {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Security Badges */
+.security-badges {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.security-badge:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #00d4ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.security-badge i {
+    font-size: 1.25rem;
+    color: #00d4ff;
+}
+
+.security-badge span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.3px;
+}
+
+/* Application Type Buttons */
+.application-types {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.app-type-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.app-type-btn i {
+    font-size: 1.25rem;
+}
+
+.app-type-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #00d4ff;
+    transform: translateY(-2px);
+}
+
+.app-type-btn.active {
+    background: #00d4ff;
+    border-color: #00d4ff;
+    color: #0a2540;
+}
+
+/* Application Form Section */
+.application-form-section {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.credit-application-form {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Applicant Headers */
+.applicant-header {
+    background: linear-gradient(135deg, #0a2540 0%, #00d4ff 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    margin: 2rem 0 2rem 0;
+}
+
+.applicant-header:first-of-type {
+    margin-top: 0;
+}
+
+.applicant-header h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.applicant-header i {
+    font-size: 2rem;
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0a2540;
+    margin-bottom: 1.5rem;
+}
+
+.section-title i {
+    color: #00d4ff;
+    font-size: 1.75rem;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #0a2540;
+    font-size: 0.95rem;
+}
+
+.form-group label .required {
+    color: #dc2626;
+    margin-left: 3px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.875rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Consent Box */
+.consent-box {
+    background: #f8f9fa;
+    border: 2px solid #e5e7eb;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-top: 0.25rem;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: #00d4ff;
+}
+
+.checkbox-label span {
+    flex: 1;
+    color: #4b5563;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+.form-actions .btn {
+    min-width: 200px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.form-actions .btn-primary {
+    background: linear-gradient(135deg, #00d4ff, #0088cc);
+    color: white;
+}
+
+.form-actions .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+}
+
+/* Success Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-icon {
+    font-size: 5rem;
+    color: #10b981;
+    margin-bottom: 1.5rem;
+}
+
+.modal-content h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0a2540;
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    color: #6b7280;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.modal-note {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    margin: 1.5rem 0;
+    color: #4b5563;
+}
+
+.modal-content .btn {
+    margin-top: 1.5rem;
+    min-width: 200px;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 9998;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-spinner.active {
+    display: flex;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #00d4ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .application-header h1 {
+        font-size: 2rem;
+    }
+
+    .application-header i {
+        font-size: 3rem;
+    }
+
+    .security-badges {
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .security-badge {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .security-badge i {
+        font-size: 1.1rem;
+    }
+
+    .security-badge span {
+        font-size: 0.85rem;
+    }
+
+    .application-types {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .app-type-btn {
+        justify-content: center;
+    }
+
+    .credit-application-form {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .applicant-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .modal-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .modal-icon {
+        font-size: 4rem;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .application-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .security-badges {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+    }
+
+    .security-badge {
+        padding: 0.5rem 0.875rem;
+        justify-content: center;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .security-badge span {
+        font-size: 0.8rem;
+    }
+
+    .section-title {
+        font-size: 1.125rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-actions .btn {
+        min-width: 100%;
+    }
+}

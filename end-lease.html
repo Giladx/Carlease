@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>End My Current Lease - United Auto Lease</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/end-lease.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://www.genspark.ai/api/files/s/WMgJLDUV" alt="United Auto Lease" class="logo-image">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="leasing-deals.html">Browse Inventory</a></li>
+                <li class="has-dropdown">
+                    <a href="#" onclick="return false">
+                        Credit Application
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="personal-application.html"><i class="fas fa-user"></i> Personal Application</a></li>
+                        <li><a href="business-application.html"><i class="fas fa-building"></i> Business Application</a></li>
+                        <li><a href="joint-application.html"><i class="fas fa-users"></i> Joint Application</a></li>
+                    </ul>
+                </li>
+                <li><a href="end-lease.html" class="active">
+                    <i class="fas fa-handshake"></i> End My Current Lease
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Form -->
+    <section class="end-lease-hero">
+        <div class="container">
+            <div class="hero-content-grid">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <i class="fas fa-shield-check"></i>
+                        <span>Easy Lease Transition</span>
+                    </div>
+                    <h1>End Your Current Lease</h1>
+                    <p class="hero-subtitle">Get the best value for your leased vehicle and seamlessly transition to your next car</p>
+                    
+                    <div class="hero-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Quick valuation in 2 minutes</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Fair market price guaranteed</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Handle all lease-end paperwork</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>No early termination fees</span>
+                        </div>
+                    </div>
+
+                    <div class="trust-indicators">
+                        <div class="trust-item">
+                            <div class="trust-number">15+</div>
+                            <div class="trust-label">Years Experience</div>
+                        </div>
+                        <div class="trust-item">
+                            <div class="trust-number">10k+</div>
+                            <div class="trust-label">Vehicles Processed</div>
+                        </div>
+                        <div class="trust-item">
+                            <div class="trust-number">4.9★</div>
+                            <div class="trust-label">Customer Rating</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-form-container">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <i class="fas fa-calculator"></i>
+                            <h2>Get Your Lease Valuation</h2>
+                            <p>Fill out the form below for an instant estimate</p>
+                        </div>
+
+                        <form id="leaseEndForm" class="lease-end-form">
+                            <!-- Vehicle Information -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-car"></i> Vehicle Information</h3>
+                                
+                                <div class="form-group">
+                                    <label for="year">Year <span class="required">*</span></label>
+                                    <select id="year" name="year" required>
+                                        <option value="">Select Year</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2020">2020</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2018">2018</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="make">Make <span class="required">*</span></label>
+                                    <input type="text" id="make" name="make" placeholder="e.g., Honda, Toyota, BMW" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="model">Model <span class="required">*</span></label>
+                                    <input type="text" id="model" name="model" placeholder="e.g., Accord, Camry, 3 Series" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="trim">Trim Level</label>
+                                        <input type="text" id="trim" name="trim" placeholder="e.g., LX, Sport, Premium">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mileage">Current Mileage <span class="required">*</span></label>
+                                        <input type="number" id="mileage" name="mileage" placeholder="e.g., 25000" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="vin">VIN (Vehicle Identification Number)</label>
+                                    <input type="text" id="vin" name="vin" placeholder="17-character VIN" maxlength="17">
+                                </div>
+                            </div>
+
+                            <!-- Lease Information -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-file-contract"></i> Lease Details</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="leaseEndDate">Lease End Date <span class="required">*</span></label>
+                                        <input type="date" id="leaseEndDate" name="leaseEndDate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="monthlyPayment">Monthly Payment</label>
+                                        <input type="number" id="monthlyPayment" name="monthlyPayment" placeholder="$" step="0.01">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="residualValue">Residual/Buyout Value</label>
+                                    <input type="number" id="residualValue" name="residualValue" placeholder="$" step="0.01">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="condition">Vehicle Condition <span class="required">*</span></label>
+                                    <select id="condition" name="condition" required>
+                                        <option value="">Select Condition</option>
+                                        <option value="excellent">Excellent - Like New</option>
+                                        <option value="good">Good - Minor Wear</option>
+                                        <option value="fair">Fair - Normal Wear & Tear</option>
+                                        <option value="poor">Poor - Significant Damage</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="form-section">
+                                <h3><i class="fas fa-user"></i> Your Information</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="firstName">First Name <span class="required">*</span></label>
+                                        <input type="text" id="firstName" name="firstName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastName">Last Name <span class="required">*</span></label>
+                                        <input type="text" id="lastName" name="lastName" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email Address <span class="required">*</span></label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone">Phone Number <span class="required">*</span></label>
+                                    <input type="tel" id="phone" name="phone" placeholder="(305) 724-5534" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="zipCode">ZIP Code <span class="required">*</span></label>
+                                    <input type="text" id="zipCode" name="zipCode" placeholder="33009" maxlength="5" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="comments">Additional Comments or Questions</label>
+                                    <textarea id="comments" name="comments" rows="3" placeholder="Let us know if you have any specific concerns or questions..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary btn-large btn-submit">
+                                <i class="fas fa-paper-plane"></i>
+                                Get My Free Valuation
+                            </button>
+
+                            <p class="form-disclaimer">
+                                <i class="fas fa-lock"></i>
+                                Your information is secure and will never be shared. We'll contact you within 24 hours with your valuation.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-lease">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Lease-End Works</h2>
+                <p>Simple, transparent, and stress-free process in 4 easy steps</p>
+            </div>
+
+            <div class="steps-timeline">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>Submit Your Details</h3>
+                    <p>Fill out our quick form with your vehicle and lease information. Takes less than 2 minutes.</p>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Get Your Valuation</h3>
+                    <p>Receive a fair market valuation within 24 hours based on current market conditions.</p>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Schedule Inspection</h3>
+                    <p>We'll arrange a convenient time for a quick vehicle inspection at your location.</p>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Complete Transfer</h3>
+                    <p>We handle all paperwork with your leasing company and complete the transition smoothly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="lease-end-benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why End Your Lease With Us?</h2>
+                <p>We make the lease-end process easy and profitable for you</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Best Market Value</h3>
+                    <p>Get top dollar for your leased vehicle. We pay competitive market prices and often beat dealer trade-in offers.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h3>No Hassle Paperwork</h3>
+                    <p>We handle all communication and paperwork with your leasing company. You just sign and we do the rest.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>No Hidden Fees</h3>
+                    <p>Transparent pricing with no early termination fees or surprise charges. What we quote is what you get.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Fast Process</h3>
+                    <p>Complete the entire lease-end process in as little as 48 hours. Quick inspections and immediate offers.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <h3>Trade-In Credit</h3>
+                    <p>Use your lease-end value as a down payment on your next vehicle lease. Seamless vehicle-to-vehicle transition.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Expert Support</h3>
+                    <p>Dedicated lease-end specialists guide you through every step. Call us anytime at (305) 724-5534.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about ending your lease</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Can I end my lease early?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! We can help you end your lease early without traditional early termination fees. We work directly with leasing companies to negotiate the best terms for you.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>What if I'm over my mileage limit?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Don't worry! Excess mileage fees can be factored into our offer. In many cases, we can help you avoid paying those fees directly to the leasing company.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Do you handle all the paperwork?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We communicate directly with your leasing company and handle all transfer paperwork, title work, and payoff documentation. You just provide us with the details.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>How long does the process take?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most lease-end transitions are completed within 48-72 hours after inspection. We work quickly to ensure a smooth and efficient process.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>What if there's damage to the vehicle?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We assess all damage during our inspection. Minor wear and tear is normal and expected. We'll give you a fair valuation based on the actual condition.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Can I lease a new vehicle from you?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! We can help you transition from your current lease into a brand new vehicle. Browse our inventory of 202+ vehicles and get started today.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="lease-end-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to End Your Lease?</h2>
+                <p>Get your free valuation today and discover how much your leased vehicle is worth</p>
+                <div class="cta-buttons">
+                    <a href="#leaseEndForm" class="btn btn-primary btn-large">
+                        <i class="fas fa-calculator"></i>
+                        Get Free Valuation
+                    </a>
+                    <a href="tel:3057245534" class="btn btn-outline btn-large">
+                        <i class="fas fa-phone"></i>
+                        Call (305) 724-5534
+                    </a>
+                </div>
+                <p class="cta-note">
+                    <i class="fas fa-clock"></i>
+                    Available Monday-Friday, 9:00 AM - 6:00 PM EST
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>United Auto Lease</h3>
+                    <p>Your trusted partner for hassle-free auto leasing since 2008. Experience the difference with our premium service and competitive rates.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/unitedautolease/" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61565802159612" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="leasing-deals.html">Browse Inventory</a></li>
+                        <li><a href="personal-application.html">Credit Application</a></li>
+                        <li><a href="end-lease.html">End My Lease</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>1835 East Hallandale Beach Blvd<br>Hallandale Beach, Florida 33009</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>305-724-5534</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>sales@unitedautolease.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 United Auto Lease. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/end-lease.js"></script>
+</body>
+</html>

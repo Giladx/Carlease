@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Credit Application - United Auto Lease</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/applications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="./index.html" class="logo">
+                <img src="https://www.genspark.ai/api/files/s/WMgJLDUV" alt="United Auto Lease" class="logo-image">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="./leasing-deals.html">Browse Inventory</a></li>
+                <li class="has-dropdown">
+                    <a href="#" onclick="return false">
+                        Credit Application
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="./personal-application.html" class="active"><i class="fas fa-user"></i> Personal Application</a></li>
+                        <li><a href="./business-application.html"><i class="fas fa-building"></i> Business Application</a></li>
+                        <li><a href="./joint-application.html"><i class="fas fa-users"></i> Joint Application</a></li>
+                    </ul>
+                </li>
+                <li><a href="./end-lease.html">
+                    <i class="fas fa-handshake"></i> End My Current Lease
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Application Hero -->
+    <section class="application-hero">
+        <div class="container">
+            <div class="application-header">
+                <i class="fas fa-user-circle"></i>
+                <h1>Personal Credit Application</h1>
+                <p>Complete the form below to apply for auto leasing. All information is secure and confidential.</p>
+                
+                <!-- Security Badges -->
+                <div class="security-badges">
+                    <div class="security-badge">
+                        <i class="fas fa-lock"></i>
+                        <span>256-Bit SSL Encrypted</span>
+                    </div>
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure Processing</span>
+                    </div>
+                    <div class="security-badge">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Privacy Protected</span>
+                    </div>
+                </div>
+            </div>
+            <div class="application-types">
+                <a href="./personal-application.html" class="app-type-btn active">
+                    <i class="fas fa-user"></i>
+                    <span>Personal</span>
+                </a>
+                <a href="./business-application.html" class="app-type-btn">
+                    <i class="fas fa-building"></i>
+                    <span>Business</span>
+                </a>
+                <a href="./joint-application.html" class="app-type-btn">
+                    <i class="fas fa-users"></i>
+                    <span>Joint</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="application-form-section">
+        <div class="container">
+            <form id="personalApplicationForm" class="credit-application-form">
+                
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-user"></i>
+                        Personal Information
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="middleName">Middle Name</label>
+                            <input type="text" id="middleName" name="middleName">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="suffix">Suffix</label>
+                            <select id="suffix" name="suffix">
+                                <option value="">None</option>
+                                <option value="Jr">Jr.</option>
+                                <option value="Sr">Sr.</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                                <option value="IV">IV</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateOfBirth">Date of Birth *</label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ssn">Social Security Number *</label>
+                            <input type="text" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="driversLicense">Driver's License Number *</label>
+                            <input type="text" id="driversLicense" name="driversLicense" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="licenseState">License State *</label>
+                            <select id="licenseState" name="licenseState" required>
+                                <option value="">Select State</option>
+                                <option value="FL">Florida</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="NY">New York</option>
+                                <option value="TX">Texas</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-phone"></i>
+                        Contact Information
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="(XXX) XXX-XXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="alternatePhone">Alternate Phone</label>
+                            <input type="tel" id="alternatePhone" name="alternatePhone" placeholder="(XXX) XXX-XXXX">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Address -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-home"></i>
+                        Current Address
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="address">Street Address *</label>
+                            <input type="text" id="address" name="address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State *</label>
+                            <select id="state" name="state" required>
+                                <option value="">Select State</option>
+                                <option value="FL">Florida</option>
+                                <option value="AL">Alabama</option>
+                                <option value="CA">California</option>
+                                <option value="NY">New York</option>
+                                <option value="TX">Texas</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">ZIP Code *</label>
+                            <input type="text" id="zipCode" name="zipCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="residenceType">Residence Type *</label>
+                            <select id="residenceType" name="residenceType" required>
+                                <option value="">Select Type</option>
+                                <option value="Own">Own</option>
+                                <option value="Rent">Rent</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="monthlyPayment">Monthly Housing Payment *</label>
+                            <input type="number" id="monthlyPayment" name="monthlyPayment" placeholder="$" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeAtAddress">Time at Address (Years) *</label>
+                            <input type="number" id="timeAtAddress" name="timeAtAddress" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Employment Information -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-briefcase"></i>
+                        Employment Information
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="employmentStatus">Employment Status *</label>
+                            <select id="employmentStatus" name="employmentStatus" required>
+                                <option value="">Select Status</option>
+                                <option value="Employed">Employed</option>
+                                <option value="Self-Employed">Self-Employed</option>
+                                <option value="Retired">Retired</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="employer">Employer Name *</label>
+                            <input type="text" id="employer" name="employer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="occupation">Occupation/Title *</label>
+                            <input type="text" id="occupation" name="occupation" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="employerPhone">Employer Phone *</label>
+                            <input type="tel" id="employerPhone" name="employerPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeEmployed">Time Employed (Years) *</label>
+                            <input type="number" id="timeEmployed" name="timeEmployed" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="grossIncome">Gross Monthly Income *</label>
+                            <input type="number" id="grossIncome" name="grossIncome" placeholder="$" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="employerAddress">Employer Address</label>
+                            <input type="text" id="employerAddress" name="employerAddress">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Information -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-car"></i>
+                        Vehicle of Interest
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="vehicleMake">Make</label>
+                            <input type="text" id="vehicleMake" name="vehicleMake" placeholder="e.g., BMW, Toyota">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleModel">Model</label>
+                            <input type="text" id="vehicleModel" name="vehicleModel" placeholder="e.g., X5, Camry">
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleYear">Year</label>
+                            <input type="number" id="vehicleYear" name="vehicleYear" placeholder="2025">
+                        </div>
+                        <div class="form-group">
+                            <label for="desiredTerm">Desired Lease Term (Months)</label>
+                            <select id="desiredTerm" name="desiredTerm">
+                                <option value="">Select Term</option>
+                                <option value="24">24 Months</option>
+                                <option value="36">36 Months</option>
+                                <option value="39">39 Months</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-info-circle"></i>
+                        Additional Information
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="comments">Comments or Special Requests</label>
+                            <textarea id="comments" name="comments" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consent -->
+                <div class="form-section">
+                    <div class="consent-box">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <span>I authorize United Auto Lease to obtain credit reports and verify the information provided in this application. I certify that all information is true and accurate to the best of my knowledge. *</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Application
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Application Submitted Successfully!</h2>
+            <p>Thank you for submitting your credit application. Our customer service department will review your information and contact you shortly during normal business hours.</p>
+            <p class="modal-note"><strong>Normal Business Hours:</strong> Monday - Friday, 9:00 AM - 6:00 PM EST</p>
+            <button onclick="window.location.href='../index.html'" class="btn btn-primary">Return to Home</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>United Auto Lease</h3>
+                    <p>Your trusted partner for hassle-free auto leasing since 2008. Experience the difference with our premium service and competitive rates.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/unitedautolease/" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61565802159612" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="leasing-deals.html">Browse Inventory</a></li>
+                        <li><a href="personal-application.html">Credit Application</a></li>
+                        <li><a href="end-lease.html">End My Lease</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>1835 East Hallandale Beach Blvd<br>Hallandale Beach, Florida 33009</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>305-724-5534</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>sales@unitedautolease.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 United Auto Lease. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/applications.js"></script>
+</body>
+</html>
