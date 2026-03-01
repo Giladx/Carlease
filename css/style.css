@@ -1730,6 +1730,15 @@ body {
     transform: translateY(-2px);
 }
 
+@media (min-width: 769px) {
+    .mobile-menu-btn {
+        display: none !important;
+    }
+    .nav-menu {
+        display: flex !important;
+    }
+}
+
 @media (max-width: 768px) {
     /* Mobile menu button */
     .mobile-menu-btn {
