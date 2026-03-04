@@ -70,6 +70,83 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================
+// EMAIL DELIVERY
+// ============================================
+const OWNER_NOTIFICATION_EMAIL = 'sales@unitedautolease.com';
+const OWNER_CC_EMAILS = ['Ben@unitedautolease.com'];
+
+async function sendFormEmails({
+    subject,
+    formType,
+    customerEmail,
+    customerName,
+    customerMessage,
+    fields,
+    attachments = []
+}) {
+    const body = {
+        _subject: subject,
+        _cc: OWNER_CC_EMAILS.join(','),
+        _template: 'table',
+        _captcha: 'false',
+        formType,
+        customerName: customerName || 'N/A',
+        customerEmail: customerEmail || 'N/A',
+        customerMessage: customerMessage || '',
+        ...fields
+    };
+
+    if (customerEmail) {
+        body._replyto = customerEmail;
+        body._autoresponse = `Hi ${customerName || 'there'}, we received your request from United Auto Lease. Our team will contact you shortly.`;
+    }
+
+    const hasAttachments = Array.isArray(attachments) && attachments.length > 0;
+    let response;
+
+    if (hasAttachments) {
+        const multipart = new FormData();
+        Object.entries(body).forEach(([key, value]) => {
+            multipart.append(key, String(value ?? ''));
+        });
+
+        attachments.forEach((file, index) => {
+            if (file && file.blob) {
+                const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
+                multipart.append(fieldName, file.blob, file.filename || `attachment-${index + 1}.pdf`);
+            }
+        });
+
+        response = await fetch(`https://formsubmit.co/ajax/${OWNER_NOTIFICATION_EMAIL}`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json'
+            },
+            body: multipart
+        });
+    } else {
+        response = await fetch(`https://formsubmit.co/ajax/${OWNER_NOTIFICATION_EMAIL}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+    }
+
+    const result = await response.json().catch(() => ({}));
+    const isSuccess = result.success === true || result.success === 'true';
+    if (!response.ok || !isSuccess) {
+        throw new Error('Email sending failed');
+    }
+
+    return result;
+}
+
+window.sendFormEmails = sendFormEmails;
+
+// ============================================
 // TESTIMONIALS CAROUSEL
 // ============================================
 const testimonialsTrack = document.getElementById('testimonialsTrack');
@@ -163,8 +240,15 @@ if (testimonialsTrack) {
 const quoteForm = document.getElementById('quoteFormElement');
 
 if (quoteForm) {
-    quoteForm.addEventListener('submit', (e) => {
+    quoteForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        const submitBtn = quoteForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        }
         
         // Get form data
         const formData = {
@@ -176,14 +260,32 @@ if (quoteForm) {
             message: document.getElementById('message').value
         };
 
-        // Show success message
-        showNotification('Thank you! We will contact you within 24 hours.', 'success');
-        
-        // Reset form
-        quoteForm.reset();
-        
-        // In production, you would send this data to a server
-        console.log('Quote Request:', formData);
+        try {
+            await sendFormEmails({
+                subject: `New Quote Request: ${formData.firstName} ${formData.lastName}`,
+                formType: 'Homepage Quote Form',
+                customerEmail: formData.email,
+                customerName: `${formData.firstName} ${formData.lastName}`.trim(),
+                customerMessage: formData.message,
+                fields: {
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    phone: formData.phone,
+                    vehicle: formData.vehicle
+                }
+            });
+
+            showNotification('Thank you! We will contact you within 24 hours.', 'success');
+            quoteForm.reset();
+        } catch (error) {
+            showNotification('Submission failed. Please try again or call 305-724-5534.', 'error');
+            console.error('Quote form email error:', error);
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        }
     });
 }
 

@@ -758,7 +758,6 @@ function setupContactForm() {
             };
             
             try {
-                // Simulate email sending (would integrate with backend)
                 await simulateEmailSending(formData);
                 
                 // Show success message
@@ -778,22 +777,24 @@ function setupContactForm() {
 }
 
 /**
- * Simulate email sending (backend integration required)
+ * Send leasing inquiry emails (owner notification + customer auto-response)
  */
 async function simulateEmailSending(data) {
-    return new Promise((resolve) => {
-        console.log('Email would be sent to: sales@unitedautolease.com, ben@unitedautolease.com');
-        console.log('Form data:', data);
-        
-        // In production, this would make an actual API call to your email service
-        // Example:
-        // await fetch('/api/send-contact-email', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(data)
-        // });
-        
-        setTimeout(resolve, 1000); // Simulate network delay
+    if (typeof window.sendFormEmails !== 'function') {
+        throw new Error('Email service not available');
+    }
+
+    await window.sendFormEmails({
+        subject: `Vehicle Inquiry: ${data.vehicle}`,
+        formType: 'Leasing Deals Contact Form',
+        customerEmail: data.email,
+        customerName: data.name,
+        customerMessage: data.message || '',
+        fields: {
+            vehicle: data.vehicle,
+            phone: data.phone,
+            timestamp: data.timestamp
+        }
     });
 }
 
@@ -1047,4 +1048,3 @@ window.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-

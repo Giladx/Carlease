@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('leaseEndForm');
     
     if (form) {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Get form data
@@ -25,18 +25,52 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
             submitBtn.disabled = true;
             
-            // Simulate form submission (in production, this would send to server)
-            setTimeout(() => {
-                console.log('Lease End Form Submission:', data);
-                
+            try {
+                if (typeof window.sendFormEmails !== 'function') {
+                    throw new Error('Email service not available');
+                }
+
+                await window.sendFormEmails({
+                    subject: `Lease-End Request: ${data.firstName} ${data.lastName}`,
+                    formType: 'End Lease Form',
+                    customerEmail: data.email,
+                    customerName: `${data.firstName || ''} ${data.lastName || ''}`.trim(),
+                    customerMessage: data.comments || '',
+                    fields: {
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                        phone: data.phone,
+                        zipCode: data.zipCode,
+                        year: data.year,
+                        make: data.make,
+                        model: data.model,
+                        vin: data.vin,
+                        mileage: data.mileage,
+                        condition: data.condition,
+                        leaseCompany: data.leaseCompany,
+                        leaseEndDate: data.leaseEndDate,
+                        currentPayment: data.currentPayment,
+                        buyoutAmount: data.buyoutAmount,
+                        timestamp: data.timestamp
+                    }
+                });
+
                 // Show success message
                 showSuccessModal(data);
                 
                 // Reset form
                 form.reset();
+            } catch (error) {
+                if (typeof showNotification === 'function') {
+                    showNotification('Submission failed. Please try again or call 305-724-5534.', 'error');
+                } else {
+                    alert('Submission failed. Please try again or call 305-724-5534.');
+                }
+                console.error('Lease-end form email error:', error);
+            } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-            }, 1500);
+            }
         });
     }
     

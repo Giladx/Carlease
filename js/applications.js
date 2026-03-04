@@ -2,9 +2,6 @@
 // APPLICATION FORM HANDLING
 // ============================================
 
-// Email configuration
-const EMAIL_RECIPIENTS = ['sales@unitedautolease.com', 'ben@unitedautolease.com'];
-
 // Initialize form handlers
 document.addEventListener('DOMContentLoaded', function() {
     // Personal Application
@@ -29,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 // PERSONAL APPLICATION HANDLER
 // ============================================
-function handlePersonalApplication(e) {
+async function handlePersonalApplication(e) {
     e.preventDefault();
     
     const formData = {
@@ -77,13 +74,13 @@ function handlePersonalApplication(e) {
         submittedAt: new Date().toLocaleString()
     };
 
-    processApplication(formData);
+    await processApplication(formData);
 }
 
 // ============================================
 // BUSINESS APPLICATION HANDLER
 // ============================================
-function handleBusinessApplication(e) {
+async function handleBusinessApplication(e) {
     e.preventDefault();
     
     const formData = {
@@ -137,13 +134,13 @@ function handleBusinessApplication(e) {
         submittedAt: new Date().toLocaleString()
     };
 
-    processApplication(formData);
+    await processApplication(formData);
 }
 
 // ============================================
 // JOINT APPLICATION HANDLER
 // ============================================
-function handleJointApplication(e) {
+async function handleJointApplication(e) {
     e.preventDefault();
     
     const formData = {
@@ -216,21 +213,27 @@ function handleJointApplication(e) {
         submittedAt: new Date().toLocaleString()
     };
 
-    processApplication(formData);
+    await processApplication(formData);
 }
 
 // ============================================
 // PROCESS APPLICATION
 // ============================================
-function processApplication(formData) {
+async function processApplication(formData) {
     // Generate PDF
-    generatePDF(formData);
+    const generatedPdf = generatePDF(formData);
     
-    // Send email (simulated)
-    sendEmail(formData);
-    
-    // Show success modal
-    showSuccessModal();
+    try {
+        await sendEmail(formData, generatedPdf);
+        showSuccessModal();
+    } catch (error) {
+        if (typeof showNotification === 'function') {
+            showNotification('Submission failed. Please try again or call 305-724-5534.', 'error');
+        } else {
+            alert('Submission failed. Please try again or call 305-724-5534.');
+        }
+        console.error('Application form email error:', error);
+    }
 }
 
 // ============================================
@@ -406,9 +409,10 @@ function generatePDF(formData) {
     
     // Save PDF
     const filename = `${formData.type.replace(/ /g, '_')}_${Date.now()}.pdf`;
+    const pdfBlob = doc.output('blob');
     doc.save(filename);
     
-    return doc.output('dataurlstring');
+    return { filename, pdfBlob };
 }
 
 // Helper functions for PDF generation
@@ -441,21 +445,59 @@ function addWrappedText(doc, text, x, y, maxWidth) {
 }
 
 // ============================================
-// SEND EMAIL (SIMULATED)
+// SEND EMAIL
 // ============================================
-function sendEmail(formData) {
-    // In a real implementation, this would send the data to a backend server
-    // which would then send emails to sales@unitedautolease.com and ben@unitedautolease.com
-    
-    console.log('Email would be sent to:', EMAIL_RECIPIENTS);
-    console.log('Application Data:', formData);
-    
-    // Simulate API call
-    // fetch('/api/send-application', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ formData, recipients: EMAIL_RECIPIENTS })
-    // });
+async function sendEmail(formData, generatedPdf) {
+    if (typeof window.sendFormEmails !== 'function') {
+        throw new Error('Email service not available');
+    }
+
+    const customerEmail = getApplicationCustomerEmail(formData);
+    const customerName = getApplicationCustomerName(formData);
+
+    return window.sendFormEmails({
+        subject: `${formData.type}: ${customerName}`,
+        formType: formData.type,
+        customerEmail,
+        customerName,
+        customerMessage: formData.comments || '',
+        fields: {
+            submittedAt: formData.submittedAt,
+            applicationData: JSON.stringify(formData, null, 2)
+        },
+        attachments: generatedPdf?.pdfBlob ? [{
+            filename: generatedPdf.filename || 'application.pdf',
+            blob: generatedPdf.pdfBlob
+        }] : []
+    });
+}
+
+function getApplicationCustomerEmail(formData) {
+    if (formData.type === 'Personal Credit Application') {
+        return formData.contactInfo?.email || '';
+    }
+    if (formData.type === 'Business Credit Application') {
+        return formData.businessContact?.email || formData.guarantor?.email || '';
+    }
+    if (formData.type === 'Joint Credit Application') {
+        return formData.primaryApplicant?.personalInfo?.email || formData.coApplicant?.personalInfo?.email || '';
+    }
+    return '';
+}
+
+function getApplicationCustomerName(formData) {
+    if (formData.type === 'Personal Credit Application') {
+        return `${formData.personalInfo?.firstName || ''} ${formData.personalInfo?.lastName || ''}`.trim() || 'Applicant';
+    }
+    if (formData.type === 'Business Credit Application') {
+        return formData.businessInfo?.legalName || `${formData.guarantor?.firstName || ''} ${formData.guarantor?.lastName || ''}`.trim() || 'Applicant';
+    }
+    if (formData.type === 'Joint Credit Application') {
+        const primary = `${formData.primaryApplicant?.personalInfo?.firstName || ''} ${formData.primaryApplicant?.personalInfo?.lastName || ''}`.trim();
+        const co = `${formData.coApplicant?.personalInfo?.firstName || ''} ${formData.coApplicant?.personalInfo?.lastName || ''}`.trim();
+        return [primary, co].filter(Boolean).join(' & ') || 'Applicants';
+    }
+    return 'Applicant';
 }
 
 // ============================================
