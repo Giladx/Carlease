@@ -72,7 +72,7 @@ window.addEventListener('scroll', () => {
 // ============================================
 // EMAIL DELIVERY
 // ============================================
-const OWNER_NOTIFICATION_EMAIL = 'sales@unitedautolease.com';
+const OWNER_NOTIFICATION_EMAIL = 'UnitedAutolease@gmail.com';
 const OWNER_CC_EMAILS = ['Ben@unitedautolease.com'];
 
 async function sendFormEmails({

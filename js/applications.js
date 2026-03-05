@@ -485,7 +485,7 @@ async function sendEmailDirectly({
     fields,
     attachments = []
 }) {
-    const ownerEmail = 'sales@unitedautolease.com';
+    const ownerEmail = 'UnitedAutolease@gmail.com';
     const cc = 'Ben@unitedautolease.com';
     const payload = new FormData();
 
