@@ -485,47 +485,39 @@ async function sendEmailDirectly({
     fields,
     attachments = []
 }) {
-    const ownerEmail = 'UnitedAutolease@gmail.com';
-    const cc = 'Ben@unitedautolease.com';
-    const payload = new FormData();
+    // Convert any Blob attachments to base64 for JSON transport
+    const processedAttachments = await Promise.all(
+        attachments
+            .filter(a => a && a.blob)
+            .map(async (a) => ({
+                filename: a.filename || 'attachment.pdf',
+                content: await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result.split(',')[1]);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(a.blob);
+                })
+            }))
+    );
 
-    payload.append('_subject', subject);
-    payload.append('_cc', cc);
-    payload.append('_template', 'table');
-    payload.append('_captcha', 'false');
-    payload.append('formType', formType || 'Credit Application');
-    payload.append('customerName', customerName || 'Applicant');
-    payload.append('customerEmail', customerEmail || 'N/A');
-    payload.append('customerMessage', customerMessage || '');
-
-    if (customerEmail) {
-        payload.append('_replyto', customerEmail);
-        payload.append('_autoresponse', `Hi ${customerName || 'there'}, we received your request from United Auto Lease. Our team will contact you shortly.`);
-    }
-
-    Object.entries(fields || {}).forEach(([key, value]) => {
-        payload.append(key, String(value ?? ''));
-    });
-
-    attachments.forEach((file, index) => {
-        if (file?.blob) {
-            const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
-            payload.append(fieldName, file.blob, file.filename || `application-${index + 1}.pdf`);
-        }
-    });
-
-    const response = await fetch(`https://formsubmit.co/ajax/${ownerEmail}`, {
+    const response = await fetch('/api/send-email', {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: payload
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            subject,
+            formType,
+            customerEmail,
+            customerName,
+            customerMessage,
+            fields,
+            attachments: processedAttachments
+        })
     });
 
     const result = await response.json().catch(() => ({}));
-    const isSuccess = result.success === true || result.success === 'true';
-    if (!response.ok || !isSuccess) {
-        throw new Error('Email sending failed');
+    if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Email sending failed');
     }
-
     return result;
 }
 

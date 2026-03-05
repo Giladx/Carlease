@@ -26,10 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = true;
             
             try {
-                if (typeof window.sendFormEmails !== 'function') {
-                    throw new Error('Email service not available');
-                }
-
                 await window.sendFormEmails({
                     subject: `Lease-End Request: ${data.firstName} ${data.lastName}`,
                     formType: 'End Lease Form',

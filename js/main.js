@@ -72,9 +72,6 @@ window.addEventListener('scroll', () => {
 // ============================================
 // EMAIL DELIVERY
 // ============================================
-const OWNER_NOTIFICATION_EMAIL = 'UnitedAutolease@gmail.com';
-const OWNER_CC_EMAILS = ['Ben@unitedautolease.com'];
-
 async function sendFormEmails({
     subject,
     formType,
@@ -84,64 +81,44 @@ async function sendFormEmails({
     fields,
     attachments = []
 }) {
-    const body = {
-        _subject: subject,
-        _cc: OWNER_CC_EMAILS.join(','),
-        _template: 'table',
-        _captcha: 'false',
-        formType,
-        customerName: customerName || 'N/A',
-        customerEmail: customerEmail || 'N/A',
-        customerMessage: customerMessage || '',
-        ...fields
-    };
+    // Convert any Blob attachments to base64 for JSON transport
+    const processedAttachments = await Promise.all(
+        attachments
+            .filter(a => a && a.blob)
+            .map(async (a) => ({
+                filename: a.filename || 'attachment.pdf',
+                content: await blobToBase64(a.blob)
+            }))
+    );
 
-    if (customerEmail) {
-        body._replyto = customerEmail;
-        body._autoresponse = `Hi ${customerName || 'there'}, we received your request from United Auto Lease. Our team will contact you shortly.`;
-    }
-
-    const hasAttachments = Array.isArray(attachments) && attachments.length > 0;
-    let response;
-
-    if (hasAttachments) {
-        const multipart = new FormData();
-        Object.entries(body).forEach(([key, value]) => {
-            multipart.append(key, String(value ?? ''));
-        });
-
-        attachments.forEach((file, index) => {
-            if (file && file.blob) {
-                const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
-                multipart.append(fieldName, file.blob, file.filename || `attachment-${index + 1}.pdf`);
-            }
-        });
-
-        response = await fetch(`https://formsubmit.co/ajax/${OWNER_NOTIFICATION_EMAIL}`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json'
-            },
-            body: multipart
-        });
-    } else {
-        response = await fetch(`https://formsubmit.co/ajax/${OWNER_NOTIFICATION_EMAIL}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-            },
-            body: JSON.stringify(body)
-        });
-    }
+    const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            subject,
+            formType,
+            customerEmail,
+            customerName,
+            customerMessage,
+            fields,
+            attachments: processedAttachments
+        })
+    });
 
     const result = await response.json().catch(() => ({}));
-    const isSuccess = result.success === true || result.success === 'true';
-    if (!response.ok || !isSuccess) {
-        throw new Error('Email sending failed');
+    if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Email sending failed');
     }
-
     return result;
+}
+
+async function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
 }
 
 window.sendFormEmails = sendFormEmails;
