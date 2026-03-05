@@ -448,14 +448,11 @@ function addWrappedText(doc, text, x, y, maxWidth) {
 // SEND EMAIL
 // ============================================
 async function sendEmail(formData, generatedPdf) {
-    if (typeof window.sendFormEmails !== 'function') {
-        throw new Error('Email service not available');
-    }
-
     const customerEmail = getApplicationCustomerEmail(formData);
     const customerName = getApplicationCustomerName(formData);
+    const sender = getEmailSender();
 
-    return window.sendFormEmails({
+    return sender({
         subject: `${formData.type}: ${customerName}`,
         formType: formData.type,
         customerEmail,
@@ -470,6 +467,66 @@ async function sendEmail(formData, generatedPdf) {
             blob: generatedPdf.pdfBlob
         }] : []
     });
+}
+
+function getEmailSender() {
+    if (typeof window.sendFormEmails === 'function') {
+        return window.sendFormEmails;
+    }
+    return sendEmailDirectly;
+}
+
+async function sendEmailDirectly({
+    subject,
+    formType,
+    customerEmail,
+    customerName,
+    customerMessage,
+    fields,
+    attachments = []
+}) {
+    const ownerEmail = 'sales@unitedautolease.com';
+    const cc = 'Ben@unitedautolease.com';
+    const payload = new FormData();
+
+    payload.append('_subject', subject);
+    payload.append('_cc', cc);
+    payload.append('_template', 'table');
+    payload.append('_captcha', 'false');
+    payload.append('formType', formType || 'Credit Application');
+    payload.append('customerName', customerName || 'Applicant');
+    payload.append('customerEmail', customerEmail || 'N/A');
+    payload.append('customerMessage', customerMessage || '');
+
+    if (customerEmail) {
+        payload.append('_replyto', customerEmail);
+        payload.append('_autoresponse', `Hi ${customerName || 'there'}, we received your request from United Auto Lease. Our team will contact you shortly.`);
+    }
+
+    Object.entries(fields || {}).forEach(([key, value]) => {
+        payload.append(key, String(value ?? ''));
+    });
+
+    attachments.forEach((file, index) => {
+        if (file?.blob) {
+            const fieldName = index === 0 ? 'attachment' : `attachment${index + 1}`;
+            payload.append(fieldName, file.blob, file.filename || `application-${index + 1}.pdf`);
+        }
+    });
+
+    const response = await fetch(`https://formsubmit.co/ajax/${ownerEmail}`, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: payload
+    });
+
+    const result = await response.json().catch(() => ({}));
+    const isSuccess = result.success === true || result.success === 'true';
+    if (!response.ok || !isSuccess) {
+        throw new Error('Email sending failed');
+    }
+
+    return result;
 }
 
 function getApplicationCustomerEmail(formData) {
