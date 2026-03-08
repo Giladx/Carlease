@@ -1,9 +1,46 @@
 // ============================================
+// US STATES
+// ============================================
+const US_STATES = [
+    ['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],
+    ['CA','California'],['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],
+    ['FL','Florida'],['GA','Georgia'],['HI','Hawaii'],['ID','Idaho'],
+    ['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],['KS','Kansas'],
+    ['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],['MD','Maryland'],
+    ['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],
+    ['MO','Missouri'],['MT','Montana'],['NE','Nebraska'],['NV','Nevada'],
+    ['NH','New Hampshire'],['NJ','New Jersey'],['NM','New Mexico'],['NY','New York'],
+    ['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],
+    ['OR','Oregon'],['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],
+    ['SD','South Dakota'],['TN','Tennessee'],['TX','Texas'],['UT','Utah'],
+    ['VT','Vermont'],['VA','Virginia'],['WA','Washington'],['WV','West Virginia'],
+    ['WI','Wisconsin'],['WY','Wyoming']
+];
+
+function populateStateSelect(selectId) {
+    const sel = document.getElementById(selectId);
+    if (!sel) return;
+    sel.innerHTML = '<option value="">Select State</option>';
+    // Florida first
+    const fl = US_STATES.find(s => s[0] === 'FL');
+    const opt = document.createElement('option');
+    opt.value = fl[0]; opt.textContent = fl[1];
+    sel.appendChild(opt);
+    US_STATES.filter(s => s[0] !== 'FL').forEach(([code, name]) => {
+        const o = document.createElement('option');
+        o.value = code; o.textContent = name;
+        sel.appendChild(o);
+    });
+}
+
+// ============================================
 // APPLICATION FORM HANDLING
 // ============================================
 
 // Initialize form handlers
 document.addEventListener('DOMContentLoaded', function() {
+    // Populate all state dropdowns
+    ['licenseState','state','businessState','guarantorState','state1','state2'].forEach(populateStateSelect);
     // Personal Application
     const personalForm = document.getElementById('personalApplicationForm');
     if (personalForm) {
@@ -458,15 +495,128 @@ async function sendEmail(formData, generatedPdf) {
         customerEmail,
         customerName,
         customerMessage: formData.comments || '',
-        fields: {
-            submittedAt: formData.submittedAt,
-            applicationData: JSON.stringify(formData, null, 2)
-        },
+        fields: flattenFormData(formData),
         attachments: generatedPdf?.pdfBlob ? [{
             filename: generatedPdf.filename || 'application.pdf',
             blob: generatedPdf.pdfBlob
         }] : []
     });
+}
+
+function flattenFormData(d) {
+    const f = {};
+    f['Submitted At'] = d.submittedAt;
+
+    if (d.type === 'Personal Credit Application') {
+        f['First Name'] = d.personalInfo?.firstName;
+        f['Middle Name'] = d.personalInfo?.middleName;
+        f['Last Name'] = d.personalInfo?.lastName;
+        f['Suffix'] = d.personalInfo?.suffix;
+        f['Date of Birth'] = d.personalInfo?.dateOfBirth;
+        f['SSN'] = d.personalInfo?.ssn;
+        f["Driver's License"] = d.personalInfo?.driversLicense;
+        f['License State'] = d.personalInfo?.licenseState;
+        f['Email'] = d.contactInfo?.email;
+        f['Phone'] = d.contactInfo?.phone;
+        f['Alternate Phone'] = d.contactInfo?.alternatePhone;
+        f['Street Address'] = d.address?.street;
+        f['City'] = d.address?.city;
+        f['State'] = d.address?.state;
+        f['ZIP Code'] = d.address?.zipCode;
+        f['Residence Type'] = d.address?.residenceType;
+        f['Monthly Payment'] = d.address?.monthlyPayment ? '$' + d.address.monthlyPayment : '';
+        f['Time at Address'] = d.address?.timeAtAddress ? d.address.timeAtAddress + ' yrs' : '';
+        f['Employment Status'] = d.employment?.status;
+        f['Employer'] = d.employment?.employer;
+        f['Occupation'] = d.employment?.occupation;
+        f['Employer Phone'] = d.employment?.employerPhone;
+        f['Time Employed'] = d.employment?.timeEmployed ? d.employment.timeEmployed + ' yrs' : '';
+        f['Gross Monthly Income'] = d.employment?.grossIncome ? '$' + d.employment.grossIncome : '';
+        f['Employer Address'] = d.employment?.employerAddress;
+        f['Vehicle Make'] = d.vehicle?.make;
+        f['Vehicle Model'] = d.vehicle?.model;
+        f['Vehicle Year'] = d.vehicle?.year;
+        f['Desired Term'] = d.vehicle?.desiredTerm ? d.vehicle.desiredTerm + ' months' : '';
+        f['Comments'] = d.comments;
+    } else if (d.type === 'Business Credit Application') {
+        f['Business Legal Name'] = d.businessInfo?.legalName;
+        f['DBA'] = d.businessInfo?.dba;
+        f['EIN'] = d.businessInfo?.ein;
+        f['Business Type'] = d.businessInfo?.businessType;
+        f['Year Established'] = d.businessInfo?.yearEstablished;
+        f['Industry'] = d.businessInfo?.industry;
+        f['Annual Revenue'] = d.businessInfo?.annualRevenue;
+        f['Business Email'] = d.businessContact?.email;
+        f['Business Phone'] = d.businessContact?.phone;
+        f['Business Fax'] = d.businessContact?.fax;
+        f['Website'] = d.businessContact?.website;
+        f['Business Street'] = d.businessAddress?.street;
+        f['Business City'] = d.businessAddress?.city;
+        f['Business State'] = d.businessAddress?.state;
+        f['Business ZIP'] = d.businessAddress?.zipCode;
+        f['Guarantor Name'] = (d.guarantor?.firstName || '') + ' ' + (d.guarantor?.lastName || '');
+        f['Title'] = d.guarantor?.title;
+        f['Guarantor DOB'] = d.guarantor?.dateOfBirth;
+        f['Guarantor SSN'] = d.guarantor?.ssn;
+        f['Guarantor Email'] = d.guarantor?.email;
+        f['Guarantor Phone'] = d.guarantor?.phone;
+        f['Ownership %'] = d.guarantor?.ownershipPercent ? d.guarantor.ownershipPercent + '%' : '';
+        f['Guarantor Street'] = d.guarantorAddress?.street;
+        f['Guarantor City'] = d.guarantorAddress?.city;
+        f['Guarantor State'] = d.guarantorAddress?.state;
+        f['Guarantor ZIP'] = d.guarantorAddress?.zipCode;
+        f['Vehicle Make'] = d.vehicle?.make;
+        f['Vehicle Model'] = d.vehicle?.model;
+        f['Vehicle Year'] = d.vehicle?.year;
+        f['Number of Vehicles'] = d.vehicle?.numberOfVehicles;
+        f['Desired Term'] = d.vehicle?.desiredTerm ? d.vehicle.desiredTerm + ' months' : '';
+        f['Business Purpose'] = d.businessPurpose;
+        f['Comments'] = d.comments;
+    } else if (d.type === 'Joint Credit Application') {
+        const p = d.primaryApplicant;
+        f['Primary: Name'] = (p?.personalInfo?.firstName || '') + ' ' + (p?.personalInfo?.middleName || '') + ' ' + (p?.personalInfo?.lastName || '');
+        f['Primary: DOB'] = p?.personalInfo?.dateOfBirth;
+        f['Primary: SSN'] = p?.personalInfo?.ssn;
+        f['Primary: License'] = p?.personalInfo?.driversLicense;
+        f['Primary: Email'] = p?.personalInfo?.email;
+        f['Primary: Phone'] = p?.personalInfo?.phone;
+        f['Primary: Address'] = p?.address?.street;
+        f['Primary: City'] = p?.address?.city;
+        f['Primary: State'] = p?.address?.state;
+        f['Primary: ZIP'] = p?.address?.zipCode;
+        f['Primary: Residence Type'] = p?.address?.residenceType;
+        f['Primary: Monthly Payment'] = p?.address?.monthlyPayment ? '$' + p.address.monthlyPayment : '';
+        f['Primary: Employment Status'] = p?.employment?.status;
+        f['Primary: Employer'] = p?.employment?.employer;
+        f['Primary: Occupation'] = p?.employment?.occupation;
+        f['Primary: Gross Income'] = p?.employment?.grossIncome ? '$' + p.employment.grossIncome + '/mo' : '';
+        const c = d.coApplicant;
+        f['Co-Applicant: Name'] = (c?.personalInfo?.firstName || '') + ' ' + (c?.personalInfo?.middleName || '') + ' ' + (c?.personalInfo?.lastName || '');
+        f['Co-Applicant: DOB'] = c?.personalInfo?.dateOfBirth;
+        f['Co-Applicant: SSN'] = c?.personalInfo?.ssn;
+        f['Co-Applicant: License'] = c?.personalInfo?.driversLicense;
+        f['Co-Applicant: Email'] = c?.personalInfo?.email;
+        f['Co-Applicant: Phone'] = c?.personalInfo?.phone;
+        f['Co-Applicant: Address'] = c?.address?.street;
+        f['Co-Applicant: City'] = c?.address?.city;
+        f['Co-Applicant: State'] = c?.address?.state;
+        f['Co-Applicant: ZIP'] = c?.address?.zipCode;
+        f['Co-Applicant: Residence Type'] = c?.address?.residenceType;
+        f['Co-Applicant: Monthly Payment'] = c?.address?.monthlyPayment ? '$' + c.address.monthlyPayment : '';
+        f['Co-Applicant: Employment Status'] = c?.employment?.status;
+        f['Co-Applicant: Employer'] = c?.employment?.employer;
+        f['Co-Applicant: Occupation'] = c?.employment?.occupation;
+        f['Co-Applicant: Gross Income'] = c?.employment?.grossIncome ? '$' + c.employment.grossIncome + '/mo' : '';
+        f['Vehicle Make'] = d.vehicle?.make;
+        f['Vehicle Model'] = d.vehicle?.model;
+        f['Vehicle Year'] = d.vehicle?.year;
+        f['Desired Term'] = d.vehicle?.desiredTerm ? d.vehicle.desiredTerm + ' months' : '';
+        f['Comments'] = d.comments;
+    }
+
+    // Remove empty values
+    Object.keys(f).forEach(k => { if (!f[k]) delete f[k]; });
+    return f;
 }
 
 function getEmailSender() {
