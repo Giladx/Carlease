@@ -79,7 +79,9 @@ async function sendFormEmails({
     customerName,
     customerMessage,
     fields,
-    attachments = []
+    attachments = [],
+    _honeypot,
+    _formLoadedAt
 }) {
     // Convert any Blob attachments to base64 for JSON transport
     const processedAttachments = await Promise.all(
@@ -101,7 +103,9 @@ async function sendFormEmails({
             customerName,
             customerMessage,
             fields,
-            attachments: processedAttachments
+            attachments: processedAttachments,
+            _honeypot: _honeypot || '',
+            _formLoadedAt: _formLoadedAt || ''
         })
     });
 
@@ -217,6 +221,9 @@ if (testimonialsTrack) {
 const quoteForm = document.getElementById('quoteFormElement');
 
 if (quoteForm) {
+    // Record when the form was loaded (for time-based bot detection)
+    const quoteFormLoadedAt = Date.now();
+
     quoteForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -226,7 +233,7 @@ if (quoteForm) {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         }
-        
+
         // Get form data
         const formData = {
             firstName: document.getElementById('firstName').value,
@@ -236,6 +243,9 @@ if (quoteForm) {
             vehicle: document.getElementById('vehicle').value,
             message: document.getElementById('message').value
         };
+
+        // Get honeypot field value
+        const honeypotField = quoteForm.querySelector('input[name="_website_url"]');
 
         try {
             await sendFormEmails({
@@ -249,7 +259,9 @@ if (quoteForm) {
                     lastName: formData.lastName,
                     phone: formData.phone,
                     vehicle: formData.vehicle
-                }
+                },
+                _honeypot: honeypotField ? honeypotField.value : '',
+                _formLoadedAt: String(quoteFormLoadedAt)
             });
 
             showNotification('Thank you! We will contact you within 24 hours.', 'success');

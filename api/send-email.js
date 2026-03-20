@@ -8,13 +8,43 @@ const CC_EMAIL = 'Ben@unitedautolease.com';
 // Until then, use: "United Auto Lease <onboarding@resend.dev>"
 const FROM_EMAIL = process.env.FROM_EMAIL || 'United Auto Lease <onboarding@resend.dev>';
 
+const ALLOWED_ORIGINS = [
+    'https://unitedautolease.com',
+    'https://www.unitedautolease.com',
+    'http://localhost:3000'
+];
+
+// Simple in-memory rate limiter (resets on cold start, which is fine for serverless)
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
+const RATE_LIMIT_MAX = 5; // max 5 requests per IP per window
+
+function isRateLimited(ip) {
+    const now = Date.now();
+    const entry = rateLimitMap.get(ip);
+    if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW) {
+        rateLimitMap.set(ip, { windowStart: now, count: 1 });
+        return false;
+    }
+    entry.count++;
+    return entry.count > RATE_LIMIT_MAX;
+}
+
 module.exports = async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    const origin = req.headers.origin || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') return res.status(200).end();
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+    // Rate limiting
+    const clientIp = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+    if (isRateLimited(clientIp)) {
+        return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+    }
 
     const {
         subject,
@@ -23,8 +53,24 @@ module.exports = async function handler(req, res) {
         customerName,
         customerMessage,
         fields,
-        attachments = []
+        attachments = [],
+        _honeypot,
+        _formLoadedAt
     } = req.body;
+
+    // Honeypot check: if the hidden field has a value, it's a bot
+    if (_honeypot) {
+        // Silently accept so bots think it worked
+        return res.status(200).json({ success: true });
+    }
+
+    // Time-based check: reject if form was submitted in less than 3 seconds
+    if (_formLoadedAt) {
+        const elapsed = Date.now() - Number(_formLoadedAt);
+        if (elapsed < 3000) {
+            return res.status(200).json({ success: true });
+        }
+    }
 
     if (!subject || !formType) {
         return res.status(400).json({ error: 'Missing required fields' });

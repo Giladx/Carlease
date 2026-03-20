@@ -37,6 +37,9 @@ function populateStateSelect(selectId) {
 // APPLICATION FORM HANDLING
 // ============================================
 
+// Record when the page loaded (for time-based bot detection)
+const appFormLoadedAt = Date.now();
+
 // Initialize form handlers
 document.addEventListener('DOMContentLoaded', function() {
     // Populate all state dropdowns
@@ -489,6 +492,10 @@ async function sendEmail(formData, generatedPdf) {
     const customerName = getApplicationCustomerName(formData);
     const sender = getEmailSender();
 
+    // Get honeypot field value from whichever form is on the page
+    const activeForm = document.querySelector('.credit-application-form');
+    const honeypotField = activeForm ? activeForm.querySelector('input[name="_website_url"]') : null;
+
     return sender({
         subject: `${formData.type}: ${customerName}`,
         formType: formData.type,
@@ -499,7 +506,9 @@ async function sendEmail(formData, generatedPdf) {
         attachments: generatedPdf?.pdfBlob ? [{
             filename: generatedPdf.filename || 'application.pdf',
             blob: generatedPdf.pdfBlob
-        }] : []
+        }] : [],
+        _honeypot: honeypotField ? honeypotField.value : '',
+        _formLoadedAt: String(appFormLoadedAt)
     });
 }
 
@@ -633,7 +642,9 @@ async function sendEmailDirectly({
     customerName,
     customerMessage,
     fields,
-    attachments = []
+    attachments = [],
+    _honeypot,
+    _formLoadedAt
 }) {
     // Convert any Blob attachments to base64 for JSON transport
     const processedAttachments = await Promise.all(
@@ -660,7 +671,9 @@ async function sendEmailDirectly({
             customerName,
             customerMessage,
             fields,
-            attachments: processedAttachments
+            attachments: processedAttachments,
+            _honeypot: _honeypot || '',
+            _formLoadedAt: _formLoadedAt || ''
         })
     });
 

@@ -1,30 +1,35 @@
 // End Lease Form Handler
+const endLeaseFormLoadedAt = Date.now();
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize animated counters
     initAnimatedCounters();
-    
+
     // Initialize steps timeline animation
     initStepsAnimation();
-    
+
     const form = document.getElementById('leaseEndForm');
-    
+
     if (form) {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             // Get form data
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-            
+
             // Add timestamp
             data.timestamp = new Date().toISOString();
-            
+
+            // Get honeypot field value
+            const honeypotField = form.querySelector('input[name="_website_url"]');
+
             // Show loading state
             const submitBtn = form.querySelector('.btn-submit');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
             submitBtn.disabled = true;
-            
+
             try {
                 await window.sendFormEmails({
                     subject: `Lease-End Request: ${data.firstName} ${data.lastName}`,
@@ -48,7 +53,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         currentPayment: data.currentPayment,
                         buyoutAmount: data.buyoutAmount,
                         timestamp: data.timestamp
-                    }
+                    },
+                    _honeypot: honeypotField ? honeypotField.value : '',
+                    _formLoadedAt: String(endLeaseFormLoadedAt)
                 });
 
                 // Show success message
